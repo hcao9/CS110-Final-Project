@@ -1,0 +1,101 @@
+import pygame
+from random import *
+from pygame.locals import *
+"""initiation"""
+pygame.init()
+bg_size = width, height = 400, 710  # backgroundsize
+screen = pygame.display.set_mode(bg_size)  # set bg
+pygame.display.set_caption("Space invaders")
+background = pygame.image.load("image/background.png")  # bg picture
+# """image"""
+use_image = pygame.image.load("image/game_pause_pressed.png") # pause_button_image
+resume_image = pygame.image.load("image/game_resume_pressed.png")
+gameover_image = pygame.image.load("image/game_over.png")  # bg_game_over
+gameover_rect = gameover_image.get_rect()
+button_inst = pygame.image.load("image/instruction.png")
+button_quit = pygame.image.load("image/quit.png")
+button_restart = pygame.image.load("image/restart.png")
+bg_inst = pygame.image.load("image/bg_inst.png")
+
+class Model: 
+    class Player(pygame.sprite.Sprite):
+        """setup my plane"""
+        def __init__(self, bg_width,bg_height):
+            pygame.sprite.Sprite.__init__(self)
+            self.image = pygame.image.load("image/hero.png")  
+            self.rect = self.image.get_rect()  
+            self.rect.left, self.rect.top = (
+                bg_width - self.rect.width) // 2, (bg_height - self.rect.height - 60)
+            self.speed = 10
+            self.active = True  # True is active，False is destroyed
+            self.explosion_image = [pygame.image.load("image/hero_blowup_n1.png"),
+                                    pygame.image.load("image/hero_blowup_n2.png"),
+                                    pygame.image.load("image/hero_blowup_n3.png"),
+                                    pygame.image.load("image/hero_blowup_n4.png")]
+
+        def move_up(self):
+            if self.rect.top > 0:  # in the screen
+                self.rect.top -= self.speed
+
+        def move_down(self):
+            if self.rect.bottom < bg_height - 60:
+                self.rect.top += self.speed
+
+        def move_left(self):
+            if self.rect.left > 0:
+                self.rect.left -= self.speed
+
+        def move_right(self):
+            if self.rect.right < bg_width:
+                self.rect.right += self.speed
+
+        def reset(self):
+            self.rect.left, self.rect.top = (bg_width - self.rect.width) // 2, (bg_height - self.rect.height - 60)
+            self.active = True
+
+
+    class SmallPlane(pygame.sprite.Sprite):
+        """setup small enemies"""
+        def __init__(self, bg_width,bg_height):
+            pygame.sprite.Sprite.__init__(self)
+            self.image = pygame.image.load("image/enemy1.png")  
+            self.rect = self.image.get_rect()  
+            self.speed = 2  # speed of smallenemies
+            self.rect.left, self.rect.top = (
+                randint(0, bg_width - self.rect.width), randint(-5 * self.rect.height, -5))
+            self.active = True     # True is active，False is destroyed
+            self.explosion_image = [pygame.image.load("image/enemy1_down1.png"),
+                                    pygame.image.load("image/enemy1_down2.png"),
+                                    pygame.image.load("image/enemy1_down3.png"),
+                                    pygame.image.load("image/enemy1_down4.png")]
+
+        def move(self):  
+            if self.rect.top < bg_height:
+                self.rect.top += self.speed
+            else:
+                self.reset()
+
+        def reset(self):
+            self.rect.left, self.rect.top = (
+                randint(0, bg_width - self.rect.width),randint(-5 * self.rect.height, 0))
+            self.active = True
+
+    class Bullet(pygame.sprite.Sprite):
+        """setup bullets"""
+        def __init__(self, position):
+            pygame.sprite.Sprite.__init__(self)
+            self.image = pygame.image.load("image/bullet.png")
+            self.rect = self.image.get_rect()
+            self.rect.left, self.rect.top = position
+            self.speed = 12
+            self.active = True
+
+        def move(self):
+            if self.rect.top < 0:
+                self.active = False
+            else:
+                self.rect.top -= self.speed
+
+        def reset(self, position):
+            self.rect.left, self.rect.top = position
+            self.active = True
