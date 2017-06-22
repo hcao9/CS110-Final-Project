@@ -1,0 +1,51 @@
+import pygame
+import model
+
+def test():
+	pygame.init()
+	print("########## Testing player model ###########”)
+
+	p = model.Player()
+	print (p.rect.left , p.rect.right , p.rect.top , p.rect.bottom)
+	
+	p.move_up()
+	print (p.rect.top , p.rect.bottom)
+
+	p.move_down()
+	print (p.rect.top , p.rect.bottom)
+
+	p.move_left()
+	print (p.rect.left , p.rect.right)
+
+	p.move_right()
+	print (p.rect.left , p.rect.right)
+
+	p.reset()
+	print (p.rect.left , p.rect.top , p.rect.width , p.rect.height)
+
+
+
+	print("########## Testing SmallPlane model ##########”)
+	s = .SmallPlane()
+	print (s.rect.left , s.rect.right , s.rect.top , s.rect.bottom)
+
+	s.move()
+	print(s.rect.top)
+
+	s.reset()
+	print(s.rect.left , s.rect.top , s.rect.width , s.rect.height)
+	
+
+
+	print("########## Testing SmallPlane model ###########”)
+	b = .Bullet()
+	print (b.rect.left , b.rect.right , b.rect.top , b.rect.bottom)
+
+	b.move()
+	print(b.rect.left)
+
+	b.reset()
+	print(b.rect.left , b.rect.top)
+
+test()
+
