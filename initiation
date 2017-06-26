@@ -1,0 +1,35 @@
+bg_width = 480 # bg size
+bg_height = 852
+
+
+class controller():
+    def __init__(self):
+        # ==================Initialize==================
+        pygame.init()
+        pygame.mixer.init()
+        screen = pygame.display.set_mode([bg_width, bg_height])  # Set viewer
+        pygame.display.set_caption("Space Invader")
+        background = pygame.image.load("image/background.png")  # Load background image
+        # ==========Load music and sound====================
+        pygame.mixer.music.load("sound/background.wav")
+        pygame.mixer.music.set_volume(0.3)
+        bullet_sound = pygame.mixer.Sound("sound/bullet.wav")
+        pygame.mixer.Sound.set_volume(bullet_sound, 0.3)
+        enemy_down_sound = pygame.mixer.Sound("sound/enemy_down.wav")
+        pygame.mixer.Sound.set_volume(enemy_down_sound, 0.3)
+        hero_down_sound = pygame.mixer.Sound("sound/hero_down.wav")
+        pygame.mixer.Sound.set_volume(hero_down_sound, 0.3)
+        button_sound = pygame.mixer.Sound("sound/button.wav")
+        pygame.mixer.Sound.set_volume(button_sound, 0.3)
+        # ==========Load image and button====================
+        pause_image = pygame.image.load("image/pause.png")
+        resume_image = pygame.image.load("image/resume.png")
+        gameover_image = pygame.image.load("image/game_over.png")
+        gameover_rect = gameover_image.get_rect()
+        button_inst = pygame.image.load("image/instruction.png")
+        button_quit = pygame.image.load("image/quit.png")
+        button_restart = pygame.image.load("image/resume.png")
+        bg_inst = pygame.image.load("image/bg_inst.png")
+        score_image = pygame.image.load("image/score.png")
+        top_score_image = pygame.image.load("image/top_score.png")
+        # ==========Main program start====================
